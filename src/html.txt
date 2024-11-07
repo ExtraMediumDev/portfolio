@@ -1,0 +1,30 @@
+<div className="content">
+        <div className="floating-box">
+          <MyButton />
+          <h1>Brian Li</h1>
+          <nav>
+            <ul>
+              <li><a href="#about">About</a></li>
+              <li><a href="#experience">Experience</a></li>
+              <li><a href="#projects">Projects</a></li>
+              <li><a href="#contact">Contact</a></li>
+            </ul>
+          </nav>
+        </div>
+        <div className="floating-box">
+          <h2>Aint no party like a diddy party</h2>
+          <p>tralalalalallaa</p>
+        </div>
+        <div className="floating-box">
+          <h2>About Me</h2>
+          <p>Hi! My name is Brian Li! I'm a freshman studying Computer Science at the University of Illinois Urbana-Champaign</p>
+        </div>
+        <div className="floating-box">
+          <h2>My Projects</h2>
+          <p>Discover my constellation of amazing projects...</p>
+        </div>
+        <div className="floating-box">
+          <h2>Contact Me</h2>
+          <p>Let's create something stellar together!</p>
+        </div>
+      </div>
