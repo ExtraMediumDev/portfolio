@@ -119,7 +119,7 @@ const Navbar = () => {
                 <li
                   key={nav.id}
                   className={`font-poppins font-medium cursor-pointer text-[16px] ${
-                    active === nav.id ? "text-quaternary" : "text-secondary"
+                    active === nav.id ? "text-white" : "text-white"
                   }`}
                   onClick={() => {
                     setToggle(!toggle);

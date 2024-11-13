@@ -71,7 +71,7 @@ export const navLinks = [
       description:
         "Created for the background of my portfolio website. A cool 3D web simulation of boids and fireflies, created using Three.js and TypeScript.",
       image: floids,  
-      link: "https://dekrvch.github.io/Floids/"
+      link: "https://boids-and-fireflies.vercel.app/"
     },
     {
       name: "Predicting SPY Equity with TensorFlow",
