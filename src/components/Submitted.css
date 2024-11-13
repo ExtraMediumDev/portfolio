@@ -1,0 +1,68 @@
+/* Submitted.css */
+
+.submitted-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #282c34;
+    color: #ffffff;
+    text-align: center;
+    font-family: Arial, sans-serif;
+  }
+  
+  .checkmark-circle {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: #4caf50;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: scaleUp 0.4s ease-out forwards;
+    margin-bottom: 20px;
+    opacity: 0;
+  }
+  
+  .checkmark-image {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .thank-you-text {
+    font-size: 2em;
+    font-weight: bold;
+    margin: 0;
+    animation: fadeIn 0.5s ease-out 0.6s forwards;
+    opacity: 0;
+  }
+  
+  .message-text {
+    font-size: 1.2em;
+    margin-top: 10px;
+    animation: fadeIn 0.5s ease-out 0.8s forwards;
+    opacity: 0;
+  }
+  
+  /* Animations */
+  @keyframes scaleUp {
+    0% {
+      transform: scale(0);
+      opacity: 0;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  

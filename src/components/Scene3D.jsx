@@ -3,10 +3,6 @@ import { Canvas, useFrame, useThree, extend } from '@react-three/fiber'
 import { OrbitControls, useHelper } from '@react-three/drei'
 import * as THREE from 'three'
 
-import * as dat from 'dat.gui'
-const gui = new dat.GUI();
-gui.domElement.id = "gui";
-
 import {
   Scene,
   PerspectiveCamera,
@@ -15,16 +11,12 @@ import {
   Clock,
   Vector2,
   Vector3,
-  TextureLoader
+  TextureLoader,
+  MeshStandardMaterial
 } from 'three';
 
 import { Agents } from './Agents.jsx';
 import { Hunter } from './Hunter.jsx';
-
-import Stats from 'stats.js';
-const stats = new Stats();
-stats.showPanel(0);
-document.body.appendChild(stats.dom);
 
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
@@ -33,26 +25,6 @@ import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPa
 import { DirectionalLightHelper } from 'three';
 
 extend({ EffectComposer, RenderPass, UnrealBloomPass });
-
-function RotatingCube() {
-  const meshRef = useRef();
-
-  // Rotate the cube on every frame
-  useFrame((state, delta) => {
-    if (meshRef.current) {
-      meshRef.current.rotation.x += delta * 0.5;
-      meshRef.current.rotation.y += delta * 0.5;
-    }
-  });
-
-  return (
-    <mesh ref={meshRef} position={[0, 0, 0]}>
-      <boxGeometry args={[0.3, 0.3, 0.3]} />
-      <meshStandardMaterial color="blue" />
-    </mesh>
-  );
-}
-
 
 function PostProcessing() {
   const { gl, scene, camera, size } = useThree();
@@ -73,23 +45,13 @@ function PostProcessing() {
   return null;
 }
 
-
-function DirectionalLightWithHelper() {
-  const lightRef = useRef();
-
-  // Use helper to visualize the light source
-  useHelper(lightRef, DirectionalLightHelper, 0.5);
-
-  return <directionalLight ref={lightRef} position={[0, 1, -1]} intensity={3} />;
-}
-
-function AgentsComponent( {hunter, onAgentsInit} ) {
+function AgentsComponent( {hunter, onAgentsInit, isVisible } ) {
   const agentsRef = useRef();
 
   useEffect(() => {
     if (!hunter) return; // Guard against null hunter
 
-    const agents = new Agents(2000);
+    const agents = new Agents(800);
     agentsRef.current = agents;
     agents.setHunter(hunter);
 
@@ -97,26 +59,11 @@ function AgentsComponent( {hunter, onAgentsInit} ) {
       onAgentsInit(agents)
     }
 
-    // Set up GUI for agents
-    const gui = new dat.GUI();
-    const firingFolder = gui.addFolder('Firing');
-    firingFolder.add(agents, 'FIRE_CYCLE', 0.5, 5).step(0.1).name('Cycle');
-    firingFolder.add(agents, 'NUDGE_FACTOR', 0, 0.03).step(0.003).name('Nudging');
-    firingFolder.add(agents.uniforms.fireR2, 'value', 0, 0.006).step(0.0005).name('Body fire');
-    firingFolder.add(agents.uniforms.fireR1, 'value', 0, 0.06).step(0.005).name('Diffused fire');
-    firingFolder.add({ desync: () => agents.desynchronize() }, 'desync').name('Desynchronize');
-
-    const flockingFolder = gui.addFolder('Flocking');
-    flockingFolder.add(agents, 'DESIRED_SPEED', 0, 0.4).step(0.05).name('Speed');
-    flockingFolder.add(agents, 'COHERE_FACTOR', 0, 10).step(0.1).name('Coherence');
-    flockingFolder.add(agents, 'ALIGN_FACTOR', 0, 0.2).step(0.01).name('Alignment');
-    flockingFolder.add(agents, 'AVOID_FACTOR', 0, 50).step(1).name('Avoidance');
-
-    return () => gui.destroy();
+    
   }, [hunter]);
 
   useFrame((state, delta) => {
-    if (agentsRef.current) {
+    if (isVisible && agentsRef.current) {
       agentsRef.current.tick(delta);
     }
   });
@@ -124,7 +71,7 @@ function AgentsComponent( {hunter, onAgentsInit} ) {
   return agentsRef.current ? <primitive object={agentsRef.current.mesh} /> : null;
 }
 
-function HunterComponent({ onHunterInit }) {
+function HunterComponent({ onHunterInit, isVisible }) {
   const hunterRef = useRef();
 
     useEffect(() => {
@@ -135,19 +82,13 @@ function HunterComponent({ onHunterInit }) {
           onHunterInit(hunter);
         }
 
-        // Set up GUI for hunter
-        const gui = new dat.GUI();
-        const hunterFolder = gui.addFolder('Hunter');
-        hunterFolder.add(hunter, 'enable').name('Enable');
-        hunterFolder.add(hunter, 'CHASE_FACTOR', 0, 0.8).step(0.1).name('Chasing');
-
         return () => {
-            gui.destroy();
+            
         };
     }, []); // Ensure this only runs once
 
     useFrame((_, delta) => {
-        if (hunterRef.current) {
+        if (isVisible && hunterRef.current) {
             hunterRef.current.tick(delta);
         }
     });
@@ -155,44 +96,221 @@ function HunterComponent({ onHunterInit }) {
     return hunterRef.current ? <primitive object={hunterRef.current.mesh} /> : null;
 }
 
-function StatsComponent() {
-  const stats = useRef(new Stats());
+function FollowCamera({ hunter, isVisible }) {
+  const { camera } = useThree();
 
+  // State to track the vertical angle for vertical rotation
+  const [verticalAngle, setVerticalAngle] = useState(0); // Start at level
+  const distance = 2; // Distance from the hunter
+
+  // Update vertical angle based on scroll, allowing for free rotation
   useEffect(() => {
-    document.body.appendChild(stats.current.dom);
-    return () => document.body.removeChild(stats.current.dom);
+    const handleScroll = (event) => {
+      setVerticalAngle((prev) => prev + event.deltaY * -0.001);
+    };
+
+    window.addEventListener('wheel', handleScroll);
+
+    return () => {
+      window.removeEventListener('wheel', handleScroll);
+    };
   }, []);
 
-  useFrame(() => stats.current.update());
+  useFrame(() => {
+    if (isVisible && hunter) {
+      const hunterPos = new Vector3(0,0,0);
+
+      const offsetX = 0;
+      const offsetY = distance * Math.cos(verticalAngle); 
+      const offsetZ = distance * Math.sin(verticalAngle); 
+
+      const targetPosition = new THREE.Vector3(
+        0 + offsetX,
+        0 + offsetY,
+        0 + offsetZ
+      );
+
+      camera.position.lerp(targetPosition, 0.1);
+
+      const lookDirection = new THREE.Vector3().subVectors(hunterPos, camera.position).normalize();
+      const cameraUp = new THREE.Vector3(0, 1, 0); 
+
+      const targetQuaternion = new THREE.Quaternion().setFromUnitVectors(
+        new THREE.Vector3(0, 0, -1),
+        lookDirection
+      );
+
+
+      camera.quaternion.slerp(targetQuaternion, 0.4);
+      camera.up.copy(cameraUp); 
+    }
+  });
 
   return null;
 }
 
 
-export default function Scene3D() {
+const mousePosition = new THREE.Vector3();
 
+
+function MouseMarker({ position }) {
+  const markerRef = useRef();
+
+  useFrame(() => {
+    if (markerRef.current) {
+      markerRef.current.position.copy(position);
+    }
+  });
+
+  return (
+    <mesh ref={markerRef}>
+      <sphereGeometry args={[0.05, 16, 16]} />
+      <meshBasicMaterial color="yellow" wireframe />
+    </mesh>
+  );
+}
+
+
+
+function LineToHunter({ hunterPosition, mousePosition, isVisible }) {
+  const shapeRef = useRef();
+  const lineRef = useRef();
+
+  useEffect(() => {
+    // Create a straight line between hunter and mouse
+    const positions = [
+      hunterPosition.x, hunterPosition.y, hunterPosition.z,
+      mousePosition.x, mousePosition.y, mousePosition.z
+    ];
+
+    const lineGeometry = new THREE.BufferGeometry();
+    lineGeometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+    const lineMaterial = new THREE.LineBasicMaterial({
+      color: 0xffa500,
+      linewidth: 2,
+      transparent: true,
+      opacity: 0.9
+    });
+
+    if (lineRef.current) {
+      shapeRef.current.remove(lineRef.current);
+    }
+
+    lineRef.current = new THREE.Line(lineGeometry, lineMaterial);
+    shapeRef.current.add(lineRef.current);
+  }, [hunterPosition, mousePosition]);
+
+  return (
+    <group ref={shapeRef} />
+  );
+}
+
+
+function MouseTracker({ onUpdateMousePosition }) {
+  const { camera } = useThree();
+  const mouseRef = useRef(new THREE.Vector2()); // Use a ref for the mouse
+  const raycaster = new THREE.Raycaster();
+  const mouse3DPosition = new THREE.Vector3();
+
+  useEffect(() => {
+    function handleMouseMove(event) {
+      // Update the mouseRef current value
+      mouseRef.current.x = (event.clientX / window.innerWidth) * 2 - 1;
+      mouseRef.current.y = -(event.clientY / window.innerHeight) * 2 + 1;
+    }
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+    };
+  }, []);
+
+  useFrame(() => {
+    raycaster.setFromCamera(mouseRef.current, camera);
+
+    const distance = 2;
+    const cameraDirection = new THREE.Vector3();
+    camera.getWorldDirection(cameraDirection);
+
+    const planePosition = camera.position
+      .clone()
+      .add(cameraDirection.clone().multiplyScalar(distance));
+    const plane = new THREE.Plane().setFromNormalAndCoplanarPoint(
+      cameraDirection,
+      planePosition
+    );
+
+    raycaster.ray.intersectPlane(plane, mouse3DPosition);
+
+    onUpdateMousePosition(mouse3DPosition.clone());
+  });
+
+  return null;
+}
+
+export function useVisibility() {
+  const [isVisible, setIsVisible] = useState(document.visibilityState === "visible");
+
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      setIsVisible(document.visibilityState === "visible");
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, []);
+
+  return isVisible;
+}
+
+
+export default function Scene3D() {
+  const isVisible = useVisibility();
   const [hunter, setHunter] = useState(null);
   const [agents, setAgents] = useState(null)
+  const [mousePos, setMousePos] = useState(mousePosition);
 
   const handleHunterInit = (initializedHunter) => {
     setHunter(initializedHunter);
+    initializedHunter.setMousePosition(mousePosition);
   };
 
   const handleAgentsInit = (initializedAgents) => {
     setAgents(initializedAgents)
-  }
+  } 
 
+  const updateMousePosition = (newPosition) => {
+    setMousePos(newPosition);
+    if (hunter) {
+      hunter.setMousePosition(newPosition);
+    }
+  };
+
+  useEffect(() => {
+  }, [isVisible]);
+
+  /* 
+  <DirectionalLightWithHelper />
+  <OrbitControls />
+  <RotatingCube />
+  */
   return (
-    <Canvas camera={{ position: [3, 3, 3] }}>
-      <color attach="background" args={['black']} />
-      <ambientLight intensity={0.4} />
-      <DirectionalLightWithHelper />
-      <RotatingCube />
-      <OrbitControls />
-      <PostProcessing />
-      <StatsComponent />
-      <HunterComponent onHunterInit={handleHunterInit} />
-      {hunter && <AgentsComponent hunter={hunter} onAgentsInit={handleAgentsInit}  />}
-    </Canvas>
+    isVisible && (
+      <Canvas camera={{ position: [0.5, 0.5, 0.5] }}>
+        <color attach="background" args={['#0d1b2a']} />
+        <ambientLight intensity={0.4} />
+
+        <PostProcessing />
+        <HunterComponent onHunterInit={handleHunterInit} isVisible={isVisible} />
+        <MouseTracker onUpdateMousePosition={updateMousePosition} />
+        {hunter && <AgentsComponent hunter={hunter} onAgentsInit={handleAgentsInit} isVisible={isVisible} />}
+        {hunter && <FollowCamera hunter={hunter} isVisible={isVisible} />}
+
+        {hunter && <MouseMarker position={mousePos} />}
+        {hunter && <LineToHunter hunterPosition={hunter.getPos()} mousePosition={mousePos} isVisible={isVisible} />}
+      </Canvas>
+    )
   );
 }
