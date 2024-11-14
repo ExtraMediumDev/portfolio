@@ -11,5 +11,6 @@ import wireframe from "./wireframe.png";
 import fermilab from "./fermilab.png";
 import devlog from "./devlog.png";
 import ncsa from "./ncsa.png";
+import external_link from "./external-link.png";
 
-export { menu, close, githubIcon, instagramIcon, linkedinIcon, chess, floids, lstm, tiledash, wireframe, fermilab, devlog, ncsa };
+export { menu, close, githubIcon, instagramIcon, linkedinIcon, chess, floids, lstm, tiledash, wireframe, fermilab, devlog, ncsa, external_link };

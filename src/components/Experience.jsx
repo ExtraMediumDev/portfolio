@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import React, { useEffect, useState } from "react";
-
+import { external_link } from "../assets";
 import { experiences } from "../data";
 import SectionWrapper from "../hoc/SectionWrapper";
 import styles from "../styles";
@@ -61,7 +61,7 @@ const ExperienceDetails = ({ experience }) => {
             rel="noopener noreferrer"
             className="absolute top-2 right-2 bg-gray-300 bg-opacity-80 p-2 rounded-full transition-transform duration-300 ease-out transform hover:scale-110 hover:bg-gray-600"
             >
-            <img src="src/assets/external-link.png" alt="Open Link" className="w-4 h-4" />
+            <img src= {external_link} alt="Open Link" className="w-4 h-4" />
             </a>
         </div>
         </div>
