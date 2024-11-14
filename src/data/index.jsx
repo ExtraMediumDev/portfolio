@@ -76,7 +76,7 @@ export const navLinks = [
     {
       name: "Predicting SPY Equity with TensorFlow",
       description:
-        "Built a high-precision stock prediction model using TensorFlow and AlphaVantage, processing 641,000 data points to achieve 91% accuracy on SPY’s three-day outlook.",
+        "Built a high-precision stock prediction model using TensorFlow and AlphaVantage, processing 641,000 data points on SPY and predicting a three-day outlook.",
       image: lstm,
       link: "https://github.com/ExtraMediumDev/SPY-Prediction-using-LSTM-Neural-Network"
     },
