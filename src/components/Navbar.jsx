@@ -67,7 +67,7 @@ const Navbar = () => {
             <img src={githubIcon} alt="GitHub" className="w-6 h-6 transform hover:scale-110 hover:rotate-6 transition-transform duration-300 opacity-50 hover:opacity-100" style={{ filter: 'invert(1)' }} />
           </a>
           <a
-            href="https://linkedin.com/in/yourusername"
+            href="https://www.linkedin.com/in/brian-li-0748a426a/"
             target="_blank"
             rel="noopener noreferrer"
             className="text-slate-500 hover:text-white transition-colors"
@@ -75,7 +75,7 @@ const Navbar = () => {
             <img src={linkedinIcon} alt="LinkedIn" className="w-6 h-6 transform hover:scale-110 hover:rotate-6 transition-transform duration-300 opacity-50 hover:opacity-100" style={{ filter: 'invert(1)' }} />
           </a>
           <a
-            href="https://instagram.com/yourusername"
+            href="https://instagram.com/librianli"
             target="_blank"
             rel="noopener noreferrer"
             className="text-slate-500 hover:text-white transition-colors"
