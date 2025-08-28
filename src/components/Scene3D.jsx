@@ -11,7 +11,7 @@ function SpinningCube() {
   });
 
   return (
-    <mesh ref={ref} scale={[2.3, 2.3, 2.3]}>
+    <mesh ref={ref} scale={[1.8, 1.8, 1.8]}>
       <boxGeometry args={[1, 1, 1]} />
       <meshStandardMaterial
         color="#d1d5db"   // light gray
