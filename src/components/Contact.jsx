@@ -55,9 +55,6 @@ const Contact = () => {
         }}
         className="w-full max-w-xl mx-auto"
       >
-        <h3 className={`${styles.sectionText} text-slate-900 text-center`}>
-          Contact
-        </h3>
 
         {submitted ? (
           // ✅ Submitted animation / success message

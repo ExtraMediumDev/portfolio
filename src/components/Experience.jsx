@@ -86,7 +86,7 @@ const Experience = () => {
     <div className="sm:my-20">
       <motion.div variants={textVariant()}>
         <h2 className={`${styles.sectionText} text-center text-slate-900`}>
-          Experience
+          
         </h2>
       </motion.div>
 
