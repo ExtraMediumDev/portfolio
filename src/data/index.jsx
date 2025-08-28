@@ -6,7 +6,12 @@ import {
   tiledash,
   fermilab,
   devlog,
-  ncsa
+  ncsa,
+  dlab,
+  statefarm,
+  signalsight, 
+  cppnet, 
+  hilotrader
 } from "../assets";
 
 export const navLinks = [
@@ -30,77 +35,123 @@ export const navLinks = [
 
   const experiences = [
     {
-      title: "Deep Learning Research Intern",
-      company_name: "NCSA",
-      date: "Sep 2024 - Present",
+      title: "Software Engineer Intern",
+      company_name: "State Farm",
+      date: "May 2025 – Aug 2025",
       details: [
-        "Developing a <span style='color: white;'>ControlNet</span> model in <span style='color: white;'>Pytorch</span> to predict Alzheimer’s disease progression from MRI data.",
-        "Creating a visualization tool to analyze and display over <span style='color: white;'> 1000+ brain MRI images</span>, helping design model architecture.",
-        "Trained ImageFlowNet with <span style='color: white;'>A100 GPUs on the Brain Lumiere dataset</span>, , benchmarked performance and developing evaluation metrics to assess its effectiveness in predicting progression, for the development of our new model.",
+        "Automated deployments of a dozen core services to AWS Fargate with Python-generated Terraform, cutting manual setup by roughly three quarters.",
+        "Improved API latency compliance from ~80% to 100% by shifting heavy work to asynchronous ECS backends so batch jobs didn’t block fast paths.",
+        "Built a service that ties AWS Secrets Manager into GitLab CI/CD for automatic retrieval, rotation, and cross-account replication, reducing manual secret handling dramatically."
       ],
-      image: ncsa,  
+      image: statefarm,
+      link: "https://www.linkedin.com/company/state_farm/"
+    },
+    {
+      title: "Software Engineer",
+      company_name: "UIUC Disruption Lab",
+      date: "Jan 2025 – May 2025",
+      details: [
+        "Cut audio pipeline latency about 30% (≈200 ms → ≈140 ms) by switching from WAV to Opus in our real-time avatar stack.",
+        "Built C# API pipelines to power live text-to-speech avatar interactions using OpenAI and Hugging Face.",
+        "Shipped VR locomotion/camera scripts in Unity and demoed the system live at IMMERSE 2025."
+      ],
+      image: dlab,
+      link: "https://giesgroups.illinois.edu/disruptionlab/tech-projects/"
+    },
+    {
+      title: "Machine Learning Intern",
+      company_name: "NCSA",
+      date: "Sep 2024 – Dec 2024",
+      details: [
+        "Explored tumor-growth prediction by fine-tuning a ControlNet model in PyTorch and generating synthetic MRI slices to expand limited training data.",
+        "Built a React + FastAPI dashboard to quickly upload and organize 1,000+ MRI scans for analysis.",
+        "Scaled training across 8×A100 GPUs with Docker and Slurm, trimming end-to-end training time by ~40%."
+      ],
+      image: ncsa,
       link: "https://github.com/nickgong1/Disease-Progression"
     },
     {
-      title: "Software Engineer Intern - Quarknet",
+      title: "Quarknet Intern",
       company_name: "Fermilab",
       date: "Jun 2023 – Aug 2023",
       details: [
-        "Led a team of <span style='color: white;'>3+ in the Quarknet program</span> for the full-stack development of a data visualization website for commissioning a new sensor to detect hidden chambers inside the Kukulkan Pyramid in Mexico.",
-        "Developed a web visualization tool using <span style='color: white;'>Three.JS</span> to construct real-time interactive 3D cross-sectional representations of particle and sensor intersections.",
-        "Presented results to <span style='color: white;'>50+</span> scientists and professors and helped revive the project for the future.",
+        "Led a small team to build a full-stack site for visualizing data from a new sensor aimed at finding hidden chambers in the Kukulkan Pyramid.",
+        "Created an interactive Three.js tool to render real-time 3D cross-sections of particle paths and sensor hits.",
+        "Presented to 50+ scientists and professors, helping renew momentum for the project."
       ],
-      image: fermilab,  
+      image: fermilab,
       link: "https://www.linkedin.com/in/brian-li-0748a426a/overlay/1728281523651/single-media-viewer/?profileId=ACoAAEH7xVgBk1sL6XOXF9WKoXKOZ1H8Cf2sfM8"
     },
     {
       title: "Dev Vlogger",
-      company_name: "ExtraMediumDev on Youtube",
-      date: "2020-2021",
+      company_name: "ExtraMediumDev on YouTube",
+      date: "2020 – 2021",
       details: [
-        "Over <span style='color: white;'>3600+ views</span> with coding demonstrations on game engine effects, perlin noise, and my discord chess bot project."
+        "Published coding videos (3.6k+ views) on procedural generation, game engine effects, and a Discord chess bot."
       ],
-      image: devlog,  
+      image: devlog,
       link: "https://www.youtube.com/channel/UC6apnoSAww1AghWrpyfx0gw"
     }
   ];
   
   const portfolio = [
     {
+      name: "Signal Sight (Chrome Extension)",
+      description:
+        "Chrome extension democratizes CodeSignal assessments by revealing unimplemented details, with a full expanded summary of results, and view score breakdowns by data structures and algorithms topics.",
+      image: signalsight,
+      link: "https://signalsight.vercel.app/"
+    },
+    {
+      name: "Portable C++ Networking Framework",
+      description:
+        "Cross-platform client/server framework using ASIO for async TCP communication. Implemented a lock-free MPMC queue for high throughput and a multi-threaded stress tester.",
+      image: cppnet,
+      link: "https://github.com/ExtraMediumDev/Portable-Cpp-Networking-Framework"
+    },
+    {
+      name: "hilotrader.org",
+      description:
+        "Real-time multiplayer trading game with Flask/MongoDB backend, Socket.IO channels, and React Native frontend for mobile play. Includes live lobbies, room discovery, and session authentication.",
+      image: hilotrader,
+      link: "https://hilotrader.org"
+    },
+    {
       name: "Boids and Fireflies",
       description:
-        "Created for the background of my portfolio website. A cool 3D web simulation of boids and fireflies, created using Three.js and TypeScript.",
-      image: floids,  
+        "A 3D background simulation for my site, built with Three.js and TypeScript. Models boid flocking with glowing fireflies in real-time.",
+      image: floids,
       link: "https://boids-and-fireflies.vercel.app/"
     },
     {
       name: "Predicting SPY Equity with TensorFlow",
       description:
-        "Built a high-precision stock prediction model using TensorFlow and AlphaVantage, processing 641,000 data points on SPY and predicting a three-day outlook.",
+        "High-precision stock prediction model using TensorFlow and AlphaVantage data (641k points). Forecasts SPY three days ahead with LSTM networks.",
       image: lstm,
       link: "https://github.com/ExtraMediumDev/SPY-Prediction-using-LSTM-Neural-Network"
     },
     {
       name: "Discord Chess Bot",
       description:
-        "Created a fully interactive, multiplayer chess bot on Discord with dynamic visuals, asynchronous gameplay, and win tracking—all powered by Python and discord.py.",
+        "A multiplayer Discord chess bot built in Python. Supports asynchronous turns, dynamic board visuals, and win/loss tracking.",
       image: chess,
       link: "https://www.youtube.com/watch?v=ybJBqyN7mXk&ab_channel=ExtraMediumDev"
     },
     {
       name: "Perlin Noise Wireframe Cubes",
       description:
-        "Crafted mesmerizing 3D landscapes using Perlin noise and custom-built 3D transformations, blending art with tech through Pygame.",
+        "Generated 3D landscapes with Perlin noise and custom wireframe rendering in Pygame — mixing creative visuals with algorithms.",
       image: wireframe,
       link: "https://github.com/ExtraMediumDev/simple_wireframe_cube/tree/master"
     },
     {
       name: "Tile Dash 2D",
       description:
-        "Developed and launched *Tile Dash* on Roblox, a fast-paced strategy game engaging over 300 players with secure, server-side game mechanics.",
+        "A competitive Roblox strategy game that drew hundreds of players. Focused on secure, server-side mechanics for fair gameplay.",
       image: tiledash,
       link: "https://www.roblox.com/games/8109620521/Tile-Dash-2D"
     }
   ];
+
   
   export { experiences, portfolio };

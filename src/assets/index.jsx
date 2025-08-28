@@ -12,5 +12,10 @@ import fermilab from "./fermilab.png";
 import devlog from "./devlog.png";
 import ncsa from "./ncsa.png";
 import external_link from "./external-link.png";
+import dlab from "./disruption_lab.png";
+import statefarm from "./state_farm.jpg";
+import signalsight from "./signal_sight.png";
+import cppnet from "./cpp.png";
+import hilotrader from "./hilotrader.png";
 
-export { menu, close, githubIcon, instagramIcon, linkedinIcon, chess, floids, lstm, tiledash, wireframe, fermilab, devlog, ncsa, external_link };
+export { menu, close, githubIcon, instagramIcon, linkedinIcon, chess, floids, lstm, tiledash, wireframe, fermilab, devlog, ncsa, external_link, dlab, statefarm, signalsight, cppnet, hilotrader };

@@ -1,3 +1,4 @@
+// src/App.jsx
 import React, { useRef } from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Home, Contact, Navbar, Portfolio, Experience } from "./components";
@@ -11,35 +12,42 @@ const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Main structure with background and navigation */}
-        <Route path="/" element={
-          <div className='relative z-0 bg-primary'>
-            <div id="scene-container" className="fixed inset-0 -z-10 h-screen w-screen">
-              <Scene3D />
-            </div>
-            <Navbar />
-            <div className='wrapper' ref={wrapperRef}>
-              <div id="Home" className=''>
-                <Home scrollContainer={wrapperRef} />
-              </div>
-              <div id="portfolio" className='relative z-30 bg-primary mt-[-2px]'>
-                <Portfolio />
-              </div>
-              <div id="experience" className='relative z-30 bg-primary'>
-                <Experience />
-              </div>
-              <div id="contact" className='bg-primary'>
-                <Contact />
-              </div>
-            </div>
-          </div>
-        } />
+        <Route
+          path="/"
+          element={
+            <div className="relative z-0">
+              {/* removed the fixed full-screen Scene3D container */}
+              <Navbar />
 
-        {/* Submitted page route */}
+              <div className="wrapper" ref={wrapperRef}>
+                {/* HOME: put Scene3D as a background only for this section */}
+                <section id="Home" className="relative h-screen w-full overflow-hidden">
+                  <div className="absolute inset-0 -z-10">
+                    <Scene3D />
+                  </div>
+                  <Home />
+                </section>
+
+                <section id="portfolio" className="relative z-30 mt-[-2px]">
+                  <Portfolio />
+                </section>
+
+                <section id="experience" className="relative z-30">
+                  <Experience />
+                </section>
+
+                <section id="contact">
+                  <Contact />
+                </section>
+              </div>
+            </div>
+          }
+        />
+
         <Route path="/submitted" element={<Submitted />} />
       </Routes>
     </BrowserRouter>
   );
-}
+};
 
 export default App;

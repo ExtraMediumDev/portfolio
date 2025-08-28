@@ -1,139 +1,105 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { close, menu, githubIcon, linkedinIcon, instagramIcon } from "../assets";
+import { close, menu } from "../assets";
 import { navLinks } from "../data";
 
 const Navbar = () => {
   const [active, setActive] = useState("Home");
-  const [toggle, setToggle] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
 
+  // Track which section is in view
   useEffect(() => {
-    const handleScroll = () => {
-      const scrollTop = window.scrollY;
-      setScrolled(scrollTop > 100);
-    };
+    // Watch all sections/divs that have an id
+    const sections = Array.from(document.querySelectorAll("section[id], div[id]"));
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  useEffect(() => {
-    const sections = document.querySelectorAll("div[id]");
     const observer = new IntersectionObserver(
       (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActive(entry.target.id);
-          }
-        });
+        // pick the intersecting entry with the largest visible area
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+        if (visible) setActive(visible.target.id);
       },
       {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50% 0px'
+        // shrink the root to a center band so only one section is "active" at a time
+        root: null,
+        rootMargin: "-45% 0px -45% 0px",
+        threshold: [0, 0.25, 0.5, 0.75, 1],
       }
     );
 
-    sections.forEach((section) => observer.observe(section));
-
-    return () => sections.forEach((section) => observer.unobserve(section));
+    sections.forEach((el) => observer.observe(el));
+    return () => sections.forEach((el) => observer.unobserve(el));
   }, []);
 
+
   return (
-    <nav
-      className="w-full flex items-center bg-gradient-to-b from-black sm:bg-none p-8 sm:px-16 sm:py-10 fixed z-40 pointer-events-none"
-    >
-      <div className='w-full flex mx-auto justify-between'>
-        <Link
-          to='/'
-          className='flex items-start text-slate-500 hover:text-white transition-colors'
-          onClick={() => {
-            setActive("Home");
-            window.scrollTo(0, 0);
-          }}
-        >
-          <p className='text-[26px] lg:text-[36px] font-bold pointer-events-auto cursor-pointer flex' style={{ transform: 'translateY(-26px)' }} >
-            BL
-          </p>
-        </Link>
-
-        <div className="flex gap-5 ml-8 pointer-events-auto" style={{ transform: 'translateY(-10px)' }} >
-          <a
-            href="https://github.com/extramediumdev"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-slate-500 hover:text-white transition-colors"
-          >
-            <img src={githubIcon} alt="GitHub" className="w-6 h-6 transform hover:scale-110 hover:rotate-6 transition-transform duration-300 opacity-50 hover:opacity-100" style={{ filter: 'invert(1)' }} />
-          </a>
-          <a
-            href="https://www.linkedin.com/in/brian-li-0748a426a/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-slate-500 hover:text-white transition-colors"
-          >
-            <img src={linkedinIcon} alt="LinkedIn" className="w-6 h-6 transform hover:scale-110 hover:rotate-6 transition-transform duration-300 opacity-50 hover:opacity-100" style={{ filter: 'invert(1)' }} />
-          </a>
-          <a
-            href="https://instagram.com/librianli"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-slate-500 hover:text-white transition-colors"
-          >
-            <img src={instagramIcon} alt="Instagram" className="w-6 h-6 transform hover:scale-110 hover:rotate-6 transition-transform duration-300 opacity-50 hover:opacity-100" style={{ filter: 'invert(1)' }} />
-          </a>
-        </div>
-
-        <ul className='list-none hidden sm:flex flex-col gap-5 ml-auto'>
-          {navLinks.map((nav) => (
-            <li
-              key={nav.id}
-              className={`relative flex items-center ${
-                active === nav.id ? "text-white" : "text-slate-500"
-              } hover:text-white text-[18px] lg:text-[24px] font-bold pointer-events-auto cursor-pointer`}
-              onClick={() => setActive(nav.id)}
-            >
-              {active === nav.id && (
-                <div className="fixed right-10 w-2 h-6 lg:h-8 bg-quaternary"></div>
-              )}
-              <a href={`#${nav.id}`}>{nav.title}</a>
-            </li>
-          ))}
-        </ul>
-
-        <div className='sm:hidden flex flex-1 justify-end items-center'>
-          <img
-            src={toggle ? close : menu}
-            alt='menu'
-            className='w-[28px] h-[28px] object-contain pointer-events-auto cursor-pointer'
-            onClick={() => setToggle(!toggle)}
-          />
-
-          <div
-            className={`${
-              !toggle ? "hidden" : "flex"
-            } p-6 absolute top-20 right-0 mx-4 my-2 min-w-[140px] z-30 rounded-xl`}
-          >
-            <ul className='list-none flex justify-end items-start flex-1 flex-col gap-4'>
-              {navLinks.map((nav) => (
-                <li
-                  key={nav.id}
-                  className={`font-poppins font-medium cursor-pointer text-[16px] ${
-                    active === nav.id ? "text-white" : "text-white"
+    <>
+      {/* Desktop: clean left-side rail */}
+      <nav className="hidden sm:flex fixed top-0 left-0 h-screen z-40 items-center pl-6">
+        <ul className="flex flex-col gap-6 text-left">
+          {navLinks.map((nav) => {
+            const isActive = active.toLowerCase() === nav.id.toLowerCase();
+            return (
+              <li key={nav.id} className="relative">
+                {/* Active bar */}
+                <span
+                  className={`absolute -left-3 top-1/2 -translate-y-1/2 h-6 w-[3px] rounded bg-slate-900 transition-opacity ${
+                    isActive ? "opacity-100" : "opacity-0"
                   }`}
-                  onClick={() => {
-                    setToggle(!toggle);
-                    setActive(nav.id);
-                  }}
+                />
+                <a
+                  href={`#${nav.id}`}
+                  onClick={() => setActive(nav.id)}
+                  className={`text-[18px] lg:text-[20px] font-semibold transition-colors ${
+                    isActive ? "text-slate-900" : "text-slate-500 hover:text-slate-700"
+                  }`}
                 >
-                  <a href={`#${nav.id}`}>{nav.title}</a>
+                  {nav.title}
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      </nav>
+
+      {/* Mobile: minimal toggle + sheet */}
+      <nav className="sm:hidden fixed top-4 left-4 z-40">
+        <button
+          aria-label="Open menu"
+          onClick={() => setOpen((v) => !v)}
+          className="p-2 rounded-md bg-white/70 backdrop-blur border border-slate-200"
+        >
+          <img
+            src={open ? close : menu}
+            alt="menu"
+            className="w-6 h-6 object-contain"
+          />
+        </button>
+
+        {open && (
+          <div className="mt-3 p-3 rounded-xl bg-white/90 backdrop-blur border border-slate-200 shadow-sm">
+            <ul className="flex flex-col gap-3">
+              {navLinks.map((nav) => (
+                <li key={nav.id}>
+                  <a
+                    href={`#${nav.id}`}
+                    onClick={() => setOpen(false)}
+                    className={`text-[16px] font-medium ${
+                      active === nav.id
+                        ? "text-slate-900"
+                        : "text-slate-600 hover:text-slate-900"
+                    }`}
+                  >
+                    {nav.title}
+                  </a>
                 </li>
               ))}
             </ul>
           </div>
-        </div>
-      </div>
-    </nav>
+        )}
+      </nav>
+    </>
   );
 };
 

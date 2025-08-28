@@ -1,117 +1,141 @@
 import { motion, useAnimation } from "framer-motion";
 import React, { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
-
 import styles from "../styles";
 
 const Contact = () => {
-  const navigate = useNavigate();
-  const formRef = useRef();
-  const [form, setForm] = useState({
-    name: "",
-    email: "",
-    message: "",
-  });
-
+  const formRef = useRef(null);
+  const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [loading, setLoading] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
   const controls = useAnimation();
 
   useEffect(() => {
     controls.start("show");
   }, [controls]);
 
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
+  const handleChange = (e) =>
+    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
     try {
-      const response = await fetch("https://script.google.com/macros/s/AKfycbzGbOwEk3rR9O_hwnuGgTrfnXvxfWPUOEB9bl4RRvHsHmWZAn8ioI5axYrIQH7Tn3dEWg/exec", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-        body: new URLSearchParams(form).toString(),
-      });
+      await fetch(
+        "https://script.google.com/macros/s/AKfycbwL1-CjctKKKLYZmzu9wMZID_HQqJVhR6imzO5pKpV6JzhQ90jqtjhpIpE2DmQeJqWjGg/exec",
+        {
+          method: "POST",
+          mode: "no-cors", // fire-and-forget
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: new URLSearchParams(form).toString(),
+        }
+      );
 
-      if (response.ok) {
-        navigate("/Submitted");;
-      } else {
-        alert("Failed to send message. Please try again later.");
-      }
-    } catch (error) {
-      console.error("Error:", error);
+      setSubmitted(true);
+    } catch (err) {
+      console.error(err);
       alert("An error occurred. Please try again.");
+    } finally {
+      setLoading(false);
     }
-
-    setLoading(false);
   };
 
   return (
-    <div className="w-full h-screen flex items-center justify-center bg-gray-900">
+    <section className="w-full min-h-screen flex items-center justify-center px-6">
       <motion.div
         initial="hidden"
         animate={controls}
         variants={{
-          hidden: {
-            opacity: 0,
-            y: 100,
-          },
+          hidden: { opacity: 0, y: 40 },
           show: {
             opacity: 1,
             y: 0,
-            transition: {
-              type: "tween",
-              duration: 1,
-              delay: 0.2,
-            },
+            transition: { type: "tween", duration: 0.6, delay: 0.1 },
           },
         }}
-        className="w-full max-w-lg p-10 mx-4 rounded-lg"
+        className="w-full max-w-xl mx-auto"
       >
-        <h3 className={`${styles.sectionText} text-white text-center`}>Contact</h3>
+        <h3 className={`${styles.sectionText} text-slate-900 text-center`}>
+          Contact
+        </h3>
 
-        <form onSubmit={handleSubmit} className="mt-12 gap-4 flex flex-col">
-        
-          <label className="text-white font-medium mt-3">Full Name</label>
-          <input
-            type="text"
-            name="name"
-            placeholder="Enter your full name"
-            value={form.name}  // Add value attribute
-            onChange={handleChange}  // Ensure handleChange is set up to update state
-            className="text-gray-900 bg-tertiary p-4 border border-gray-500 rounded-lg font-medium"
-          />
-          <label className="text-white font-medium mt-3">Email Address</label>
-          <input
-            type="text"
-            name="email"
-            placeholder="Enter your email address"
-            value={form.email}  // Add value attribute
-            onChange={handleChange}  // Ensure handleChange is set up to update state
-            className="bg-tertiary p-4 text-gray-900 border border-gray-500 rounded-lg font-medium"
-          />
-          <label className="text-white font-medium mt-3">Message</label>
-          <textarea
-            name="message"
-            placeholder="Enter your message"
-            rows="5"
-            value={form.message}  // Add value attribute
-            onChange={handleChange}  // Ensure handleChange is set up to update state
-            className="bg-tertiary p-4 text-gray-900 border border-gray-500 rounded-lg font-medium"
-          />
-          <button
-            type="submit"
-            className="bg-primary py-3 px-8 mt-4 text-white bg-gray-500 font-bold rounded-lg shadow-md"
+        {submitted ? (
+          // ✅ Submitted animation / success message
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            className="mt-10 flex flex-col items-center gap-4"
           >
-            {loading ? "Sending..." : "Send"}
-          </button>
-        </form>
+            <svg
+              className="w-16 h-16 text-green-500"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              viewBox="0 0 24 24"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
+            <p className="text-lg font-semibold text-slate-700">
+              Thank you! Your message has been sent.
+            </p>
+          </motion.div>
+        ) : (
+          // ✍️ Contact form
+          <form
+            ref={formRef}
+            onSubmit={handleSubmit}
+            className="mt-8 bg-white/85 backdrop-blur rounded-xl border border-slate-200 p-6 sm:p-8 flex flex-col gap-4"
+          >
+            <label className="text-slate-700 font-medium">Full Name</label>
+            <input
+              type="text"
+              name="name"
+              placeholder="Jane Doe"
+              value={form.name}
+              onChange={handleChange}
+              required
+              autoComplete="name"
+              className="p-3 rounded-lg border border-slate-300 bg-white text-slate-900 outline-none focus:ring-2 focus:ring-slate-900/20 focus:border-slate-400"
+            />
+
+            <label className="text-slate-700 font-medium mt-1">Email</label>
+            <input
+              type="email"
+              name="email"
+              placeholder="jane@example.com"
+              value={form.email}
+              onChange={handleChange}
+              required
+              autoComplete="email"
+              className="p-3 rounded-lg border border-slate-300 bg-white text-slate-900 outline-none focus:ring-2 focus:ring-slate-900/20 focus:border-slate-400"
+            />
+
+            <label className="text-slate-700 font-medium mt-1">Message</label>
+            <textarea
+              name="message"
+              placeholder="How can I help?"
+              rows={5}
+              value={form.message}
+              onChange={handleChange}
+              required
+              className="p-3 rounded-lg border border-slate-300 bg-white text-slate-900 outline-none focus:ring-2 focus:ring-slate-900/20 focus:border-slate-400"
+            />
+
+            <button
+              type="submit"
+              disabled={loading}
+              className="mt-2 inline-flex items-center justify-center rounded-lg px-5 py-3
+                         bg-slate-900 text-white font-semibold
+                         disabled:opacity-60 disabled:cursor-not-allowed
+                         hover:bg-slate-800 transition-colors"
+            >
+              {loading ? "Sending…" : "Send"}
+            </button>
+          </form>
+        )}
       </motion.div>
-    </div>
+    </section>
   );
 };
 
