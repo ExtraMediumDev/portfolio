@@ -82,7 +82,7 @@ const Contact = () => {
           <form
             ref={formRef}
             onSubmit={handleSubmit}
-            className="mt-8 bg-white/85 backdrop-blur rounded-xl border border-slate-200 p-6 sm:p-8 flex flex-col gap-4"
+            className="mt-8 bg-slate-300/85 backdrop-blur rounded-xl border border-slate-200 p-6 sm:p-8 flex flex-col gap-4"
           >
             <label className="text-slate-700 font-medium">Full Name</label>
             <input

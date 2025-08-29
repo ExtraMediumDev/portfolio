@@ -93,7 +93,7 @@ const Experience = () => {
       <div
           className="relative mt-10 md:mt-20 md:p-12 flex flex-col sm:flex-row sm:items-start
                     sm:gap-8 lg:gap-12
-                    bg-white/70 backdrop-blur rounded-lg border border-slate-200"
+                    bg-slate-300/70 backdrop-blur rounded-lg border border-slate-200"
           style={{ maxWidth: "calc(90% - 10px)", margin: "0 auto" }}
       >
         <div className="flex flex-col z-10 sm:w-auto sm:w-full">

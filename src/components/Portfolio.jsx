@@ -15,10 +15,10 @@ const ProjectCard = ({ index, name, description, image, link }) => {
       className="
         w-full md:w-[90%] lg:w-[90%] self-end
         flex flex-col md:flex-row gap-5 p-6
-        bg-white/85 backdrop-blur-sm rounded-2xl
+        bg-slate-300/85 backdrop-blur-sm rounded-2xl
         border border-slate-200 shadow-sm transition-shadow
         hover:shadow-md
-      "
+      "k
     >
       {/* Image */}
       <div className="relative w-full md:w-3/5 flex justify-center items-center group">

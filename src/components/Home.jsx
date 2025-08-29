@@ -3,7 +3,7 @@ import { githubIcon, linkedinIcon, instagramIcon } from "../assets";
 const Home = () => {
   return (
     <section className="h-full w-full flex flex-col items-center justify-center px-6">
-      <h1 className="text-5xl sm:text-7xl font-extrabold tracking-tight text-slate-900 text-center">
+      <h1 className="text-5xl sm:text-7xl font-extrabold tracking-tight text-slate-900 text-outline">
         Brian Li
       </h1>
       <p className="mt-3 sm:mt-4 text-base sm:text-lg text-slate-600 text-center">

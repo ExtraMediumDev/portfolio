@@ -1,24 +1,44 @@
-// src/components/Scene3D.jsx
 import React, { useRef } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 
-function SpinningCube() {
-  const ref = useRef();
+function OrbitingDots() {
+  const g1 = useRef(null);
+  const g2 = useRef(null);
+  const g3 = useRef(null);
+
   useFrame((_, dt) => {
-    if (!ref.current) return;
-    ref.current.rotation.x += 0.15 * dt;
-    ref.current.rotation.y += 0.25 * dt;
+    if (!g1.current || !g2.current || !g3.current) return;
+    g1.current.rotation.y += 0.4 * dt;   // different speeds
+    g2.current.rotation.y -= 0.25 * dt;
+    g3.current.rotation.y += 0.15 * dt;
   });
 
   return (
-    <mesh ref={ref} scale={[1.8, 1.8, 1.8]}>
-      <boxGeometry args={[1, 1, 1]} />
-      <meshStandardMaterial
-        color="#d1d5db"   // light gray
-        roughness={0.9}   // matte surface
-        metalness={0}     // no metallic reflection
-      />
-    </mesh>
+    <group>
+      {/* Dot 1 */}
+      <group ref={g1} rotation={[0.4, 0, 0]}>
+        <mesh position={[2.2, 0, 0]}>
+          <sphereGeometry args={[0.06, 24, 24]} />
+          <meshStandardMaterial color="#4989e1" roughness={1} metalness={0} />
+        </mesh>
+      </group>
+
+      {/* Dot 2 */}
+      <group ref={g2} rotation={[0.9, 0, 0]}>
+        <mesh position={[-1.7, 0, 0]}>
+          <sphereGeometry args={[0.05, 24, 24]} />
+          <meshStandardMaterial color="#2da868" roughness={1} metalness={0} />
+        </mesh>
+      </group>
+
+      {/* Dot 3 */}
+      <group ref={g3} rotation={[0.2, 0, 0]}>
+        <mesh position={[0, 0, 2.0]}>
+          <sphereGeometry args={[0.07, 24, 24]} />
+          <meshStandardMaterial color="#cf1e1e" roughness={1} metalness={0} />
+        </mesh>
+      </group>
+    </group>
   );
 }
 
@@ -28,21 +48,20 @@ export default function Scene3D() {
       camera={{ position: [0, 0, 6], fov: 50 }}
       dpr={[1, 2]}
       gl={{ antialias: true }}
-      className="h-full w-full"
+      className="h-full w-full pointer-events-none"
     >
-      {/* light site background */}
+      {/* match your site background */}
       <color attach="background" args={["#f7f7f9"]} />
 
-      {/* dim ambient to allow strong contrast */}
-      <ambientLight intensity={0.5} />
+      {/* soft lighting so dots are visible but subtle */}
+      <ambientLight intensity={0.7} />
+      <directionalLight position={[3, 3, 5]} intensity={3} />
+      <directionalLight position={[-4, -2, -3]} intensity={0.2} />
 
-      {/* strong key light from top-right */}
-      <directionalLight position={[3, 3, 5]} intensity={1.4} />
-
-      {/* optional faint fill from left so it's not fully black */}
-      <directionalLight position={[-4, -2, -3]} intensity={0.15} />
-
-      <SpinningCube />
+      {/* scale a bit so they sit around the text area */}
+      <group scale={[1.2, 1.2, 1.2]}>
+        <OrbitingDots />
+      </group>
     </Canvas>
   );
 }
