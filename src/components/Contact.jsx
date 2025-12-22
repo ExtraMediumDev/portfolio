@@ -65,7 +65,7 @@ const Contact = () => {
             className="mt-10 flex flex-col items-center gap-4"
           >
             <svg
-              className="w-16 h-16 text-green-500"
+              className="w-16 h-16 text-green-400"
               fill="none"
               stroke="currentColor"
               strokeWidth="2"
@@ -73,7 +73,7 @@ const Contact = () => {
             >
               <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
             </svg>
-            <p className="text-lg font-semibold text-slate-700">
+            <p className="text-lg font-semibold text-slate-200">
               Thank you! Your message has been sent.
             </p>
           </motion.div>
@@ -82,9 +82,9 @@ const Contact = () => {
           <form
             ref={formRef}
             onSubmit={handleSubmit}
-            className="mt-8 bg-slate-300/85 backdrop-blur rounded-xl border border-slate-200 p-6 sm:p-8 flex flex-col gap-4"
+            className="mt-8 bg-zinc-900/90 backdrop-blur rounded-xl border border-zinc-700 p-6 sm:p-8 flex flex-col gap-4"
           >
-            <label className="text-slate-700 font-medium">Full Name</label>
+            <label className="text-slate-200 font-medium">Full Name</label>
             <input
               type="text"
               name="name"
@@ -93,10 +93,10 @@ const Contact = () => {
               onChange={handleChange}
               required
               autoComplete="name"
-              className="p-3 rounded-lg border border-slate-300 bg-white text-slate-900 outline-none focus:ring-2 focus:ring-slate-900/20 focus:border-slate-400"
+              className="p-3 rounded-lg border border-zinc-600 bg-zinc-800 text-white placeholder-slate-400 outline-none focus:ring-2 focus:ring-white/20 focus:border-zinc-500"
             />
 
-            <label className="text-slate-700 font-medium mt-1">Email</label>
+            <label className="text-slate-200 font-medium mt-1">Email</label>
             <input
               type="email"
               name="email"
@@ -105,10 +105,10 @@ const Contact = () => {
               onChange={handleChange}
               required
               autoComplete="email"
-              className="p-3 rounded-lg border border-slate-300 bg-white text-slate-900 outline-none focus:ring-2 focus:ring-slate-900/20 focus:border-slate-400"
+              className="p-3 rounded-lg border border-zinc-600 bg-zinc-800 text-white placeholder-slate-400 outline-none focus:ring-2 focus:ring-white/20 focus:border-zinc-500"
             />
 
-            <label className="text-slate-700 font-medium mt-1">Message</label>
+            <label className="text-slate-200 font-medium mt-1">Message</label>
             <textarea
               name="message"
               placeholder="How can I help?"
@@ -116,16 +116,16 @@ const Contact = () => {
               value={form.message}
               onChange={handleChange}
               required
-              className="p-3 rounded-lg border border-slate-300 bg-white text-slate-900 outline-none focus:ring-2 focus:ring-slate-900/20 focus:border-slate-400"
+              className="p-3 rounded-lg border border-zinc-600 bg-zinc-800 text-white placeholder-slate-400 outline-none focus:ring-2 focus:ring-white/20 focus:border-zinc-500"
             />
 
             <button
               type="submit"
               disabled={loading}
               className="mt-2 inline-flex items-center justify-center rounded-lg px-5 py-3
-                         bg-slate-900 text-white font-semibold
+                         bg-white text-zinc-900 font-semibold
                          disabled:opacity-60 disabled:cursor-not-allowed
-                         hover:bg-slate-800 transition-colors"
+                         hover:bg-slate-200 transition-colors"
             >
               {loading ? "Sending…" : "Send"}
             </button>

@@ -6,7 +6,7 @@ import linkedinIcon from "./linkedin.svg";
 import chess from "./chess.png";
 import floids from "./floids.png";
 import lstm from "./lstm.png";
-import tiledash from "./tiledash.png";
+import tiledash from "./TileDash2D.png";
 import wireframe from "./wireframe.png";
 import fermilab from "./fermilab.png";
 import devlog from "./devlog.png";
@@ -17,5 +17,7 @@ import statefarm from "./state_farm.jpg";
 import signalsight from "./signal_sight.png";
 import cppnet from "./cpp.png";
 import hilotrader from "./hilotrader.png";
+import robloxterrain from "./robloxterrain.png";
+import headshot from "./Headshot.jpg";
 
-export { menu, close, githubIcon, instagramIcon, linkedinIcon, chess, floids, lstm, tiledash, wireframe, fermilab, devlog, ncsa, external_link, dlab, statefarm, signalsight, cppnet, hilotrader };
+export { menu, close, githubIcon, instagramIcon, linkedinIcon, chess, floids, lstm, tiledash, wireframe, fermilab, devlog, ncsa, external_link, dlab, statefarm, signalsight, cppnet, hilotrader, robloxterrain, headshot };

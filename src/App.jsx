@@ -1,7 +1,7 @@
 // src/App.jsx
 import React, { useRef } from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Home, Contact, Navbar, Portfolio, Experience } from "./components";
+import { Home, Navbar, Portfolio, Resume } from "./components";
 import Scene3D from './components/Scene3D';
 import Submitted from './components/Submitted';
 import './App.css';
@@ -16,11 +16,10 @@ const App = () => {
           path="/"
           element={
             <div className="relative z-0">
-              {/* removed the fixed full-screen Scene3D container */}
               <Navbar />
 
               <div className="wrapper" ref={wrapperRef}>
-                {/* HOME: put Scene3D as a background only for this section */}
+                {/* HOME: Scene3D as background */}
                 <section id="Home" className="relative h-screen w-full overflow-hidden">
                   <div className="absolute inset-0 -z-10">
                     <Scene3D />
@@ -32,12 +31,8 @@ const App = () => {
                   <Portfolio />
                 </section>
 
-                <section id="experience" className="relative z-30">
-                  <Experience />
-                </section>
-
-                <section id="contact">
-                  <Contact />
+                <section id="resume" className="relative z-30">
+                  <Resume />
                 </section>
               </div>
             </div>

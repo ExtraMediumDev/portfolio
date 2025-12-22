@@ -1,17 +1,15 @@
 import {
   floids,
-  lstm,
   chess,
-  wireframe,
   tiledash,
   fermilab,
   devlog,
   ncsa,
   dlab,
   statefarm,
-  signalsight, 
-  cppnet, 
-  hilotrader
+  signalsight,
+  hilotrader,
+  robloxterrain
 } from "../assets";
 
 export const navLinks = [
@@ -24,12 +22,8 @@ export const navLinks = [
       title: "Portfolio",
     },
     {
-      id: "experience",
-      title: "Experience",
-    },
-    {
-      id: "contact",
-      title: "Contact",
+      id: "resume",
+      title: "Resume",
     },
   ];
 
@@ -103,13 +97,6 @@ export const navLinks = [
       link: "https://signalsight.vercel.app/"
     },
     {
-      name: "Portable C++ Networking Framework",
-      description:
-        "Cross-platform client/server framework using ASIO for async TCP communication. Implemented a lock-free MPMC queue for high throughput and a multi-threaded stress tester.",
-      image: cppnet,
-      link: "https://github.com/ExtraMediumDev/Portable-Cpp-Networking-Framework"
-    },
-    {
       name: "hilotrader.org",
       description:
         "Real-time multiplayer trading game with Flask/MongoDB backend, Socket.IO channels, and React Native frontend for mobile play. Includes live lobbies, room discovery, and session authentication.",
@@ -124,13 +111,6 @@ export const navLinks = [
       link: "https://boids-and-fireflies.vercel.app/"
     },
     {
-      name: "Predicting SPY Equity with TensorFlow",
-      description:
-        "High-precision stock prediction model using TensorFlow and AlphaVantage data (641k points). Forecasts SPY three days ahead with LSTM networks.",
-      image: lstm,
-      link: "https://github.com/ExtraMediumDev/SPY-Prediction-using-LSTM-Neural-Network"
-    },
-    {
       name: "Discord Chess Bot",
       description:
         "A multiplayer Discord chess bot built in Python. Supports asynchronous turns, dynamic board visuals, and win/loss tracking.",
@@ -138,16 +118,16 @@ export const navLinks = [
       link: "https://www.youtube.com/watch?v=ybJBqyN7mXk&ab_channel=ExtraMediumDev"
     },
     {
-      name: "Perlin Noise Wireframe Cubes",
+      name: "Perlin Noise Roblox Terrain",
       description:
-        "Generated 3D landscapes with Perlin noise and custom wireframe rendering in Pygame — mixing creative visuals with algorithms.",
-      image: wireframe,
-      link: "https://github.com/ExtraMediumDev/simple_wireframe_cube/tree/master"
+        "Procedural terrain generation in Roblox using Perlin noise algorithms. Creates realistic, infinite landscapes with smooth elevation transitions.",
+      image: robloxterrain,
+      link: "https://www.youtube.com/watch?v=y_A4L2YNCFg"
     },
     {
       name: "Tile Dash 2D",
       description:
-        "A competitive Roblox strategy game that drew hundreds of players. Focused on secure, server-side mechanics for fair gameplay.",
+        "Built an entire Roblox game using only 2D GUI elements and no 3D parts. Custom rendering, collision detection, and game logic all handled through UI frames and scripting.",
       image: tiledash,
       link: "https://www.roblox.com/games/8109620521/Tile-Dash-2D"
     }
