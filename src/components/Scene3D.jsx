@@ -110,11 +110,10 @@ function FloatingOrbs() {
       sizes[i] = 12 + Math.random() * 22;
       phases[i] = Math.random();
       
-      // Calculate dim factor: lower-left area (negative x, negative y) gets dimmed
-      // x < -3 and y < -1 = dim zone (where Brian Li title is)
-      const dimX = x < -3 ? Math.max(0.1, 1 - Math.abs(x + 3) * 0.15) : 1.0;
-      const dimY = y < -1 ? Math.max(0.1, 1 - Math.abs(y + 1) * 0.2) : 1.0;
-      dims[i] = Math.min(dimX, dimY);
+      // Calculate dim factor: left side of screen gets dimmed (where about me content is)
+      // Dim particles on the left side (x < 0) with gradual falloff
+      const dimX = x < 0 ? Math.max(0.1, 0.4 + (x + 8) * 0.075) : 1.0;
+      dims[i] = dimX;
     }
 
     return { positions, sizes, phases, dims, originalPositions };
@@ -148,10 +147,9 @@ function FloatingOrbs() {
         posArray[i * 3 + 1] = newY;
         posArray[i * 3 + 2] = newZ;
 
-        // Update dim factor based on current position
-        const dimX = newX < -4 ? Math.max(0.05, 1 - Math.abs(newX + 4) * 0.12) : 1.0;
-        const dimY = newY < -1.5 ? Math.max(0.05, 1 - Math.abs(newY + 1.5) * 0.25) : 1.0;
-        dimArray[i] = dimX * dimY;
+        // Update dim factor based on current position - left side dims
+        const dimX = newX < 0 ? Math.max(0.1, 0.4 + (newX + 8) * 0.075) : 1.0;
+        dimArray[i] = dimX;
       }
 
       pointsRef.current.geometry.attributes.position.needsUpdate = true;
