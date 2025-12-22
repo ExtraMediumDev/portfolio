@@ -66,7 +66,7 @@ const Home = () => {
             Hello! I'm a second-year Computer Science student interested in ML + quant with a background in competitive math & coding. 
             I've worked on infrastructure at <span className="text-slate-400">State Farm</span> and 
             will be at <span className="text-slate-400">Roblox</span> + building a AI food discovery startup next summer in the Bay Area. Outside of work, 
-            you'll find me playing volleyball, travelling, or hanging out with friends/family. 
+            you'll find me playing volleyball, traveling, or hanging out with friends/family. 
             Thanks for stopping by!
           </p>
         </div>
