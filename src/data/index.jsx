@@ -115,7 +115,7 @@ const portfolio = [
   {
     name: "hilotrader.org",
     description:
-      "High-stakes multiplayer trading game. Battle friends in real-time lobbies with live crypto markets. Built for speed and cross-platform mobile play.",
+      "High-stakes simulated trading game played by Jane Street traders. Battle friends in real-time lobbies on the web.",
     image: hilotrader,
     link: "https://hilotrader.org"
   },
