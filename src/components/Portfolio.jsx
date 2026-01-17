@@ -13,6 +13,7 @@ const ProjectCard = ({ index, name, description, image, link }) => {
       whileInView="show"
       viewport={{ once: true, amount: 0.1 }}
       className="
+        w-full md:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)]
         flex flex-col
         bg-zinc-900/90 backdrop-blur-sm rounded-2xl
         border border-zinc-700 shadow-sm transition-all duration-300
@@ -29,7 +30,7 @@ const ProjectCard = ({ index, name, description, image, link }) => {
         />
         {/* Overlay on hover */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-        
+
         <a
           href={link}
           target="_blank"
@@ -55,7 +56,7 @@ const ProjectCard = ({ index, name, description, image, link }) => {
         <p className="mt-2 text-sm text-slate-400 leading-relaxed line-clamp-3">
           {description}
         </p>
-        
+
         {/* View Project Link */}
         <a
           href={link}
@@ -64,10 +65,10 @@ const ProjectCard = ({ index, name, description, image, link }) => {
           className="mt-4 text-cyan-400 text-sm font-medium hover:text-cyan-300 transition-colors inline-flex items-center gap-1 group/link"
         >
           View Project
-          <svg 
-            className="w-4 h-4 transition-transform group-hover/link:translate-x-1" 
-            fill="none" 
-            stroke="currentColor" 
+          <svg
+            className="w-4 h-4 transition-transform group-hover/link:translate-x-1"
+            fill="none"
+            stroke="currentColor"
             viewBox="0 0 24 24"
           >
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
@@ -97,8 +98,8 @@ const Portfolio = () => {
         </p>
       </motion.div>
 
-      {/* Three Column Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
+      {/* Centered Flex Layout */}
+      <div className="flex flex-wrap justify-center gap-6 max-w-7xl mx-auto">
         {portfolio.map((project, index) => (
           <ProjectCard key={`project-${index}`} index={index} {...project} />
         ))}

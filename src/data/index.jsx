@@ -94,14 +94,14 @@ const portfolio = [
   {
     name: "LabMatch",
     description:
-      "Swipeable professor discovery + outreach generation for college research. An agentic web crawler that helps students find professors by crawling university pages with intent-based scraping.",
+      "Tinder + ChatGPT for research. An agentic web crawler that helps students swipe to find professors and auto-generate personalized outreach emails.",
     image: labmatch,
     link: "https://lab-match-ai.vercel.app/"
   },
   {
     name: "Chomp",
     description:
-      "Building the stealth startup to revolutionize creator economy and destroy restaurant monopolization. For the Social Media Hustler Revolution.",
+      "A stealth startup revolutionizing the creator economy to dismantle restaurant monopolies. Powering the Social Media Hustler Revolution.",
     image: chomp,
     link: "https://www.usechomp.com"
   },
@@ -115,7 +115,7 @@ const portfolio = [
   {
     name: "hilotrader.org",
     description:
-      "Real-time multiplayer trading game with Flask/MongoDB backend, Socket.IO channels, and React Native frontend for mobile play. Includes live lobbies, room discovery, and session authentication.",
+      "High-stakes multiplayer trading game. Battle friends in real-time lobbies with live crypto markets. Built for speed and cross-platform mobile play.",
     image: hilotrader,
     link: "https://hilotrader.org"
   },
