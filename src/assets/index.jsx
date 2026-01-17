@@ -19,5 +19,7 @@ import cppnet from "./cpp.png";
 import hilotrader from "./hilotrader.png";
 import robloxterrain from "./robloxterrain.png";
 import headshot from "./Headshot.jpg";
+import labmatch from "./labmatch.png";
+import chomp from "./chomp.png";
 
-export { menu, close, githubIcon, instagramIcon, linkedinIcon, chess, floids, lstm, tiledash, wireframe, fermilab, devlog, ncsa, external_link, dlab, statefarm, signalsight, cppnet, hilotrader, robloxterrain, headshot };
+export { menu, close, githubIcon, instagramIcon, linkedinIcon, chess, floids, lstm, tiledash, wireframe, fermilab, devlog, ncsa, external_link, dlab, statefarm, signalsight, cppnet, hilotrader, robloxterrain, headshot, labmatch, chomp };
